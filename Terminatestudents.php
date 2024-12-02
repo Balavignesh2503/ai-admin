@@ -46,6 +46,11 @@
                 include('./topbar.php');
                 ?>
                 <!-- End of Topbar -->
+                 <?php 
+                 include('./db.php');
+                 $query = "SELECT * FROM addstudent";
+                 $exe = mysqli_query($db,$query);              
+                ?>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -66,9 +71,11 @@
                                             <th>S.No</th>
                                             <th>Students Name</th>
                                             <th>Students Course </th>
-                                            <th>Studnts Course Fees</th>
-                                            <th>Duration</th>
-                                            <th>Category</th>
+                                            <th>Join Date</th>
+                                            <th>Student Phone</th>
+                                            <th>Student Email</th>
+                                            <th>Student Address</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <!-- <tfoot>
@@ -82,31 +89,24 @@
                                         </tr>
                                     </tfoot> -->
                                     <tbody>
+                                    <?php
+                                    while ($row = mysqli_fetch_assoc($exe)) { ?>
                                         <tr>
-                                            <td>1</td>
-                                            <td>Muthulakshmi</td>
-                                            <td>PHP</td>
-                                            <td>$7000</td>
-                                            <td>3 months</td>
-                                            <td>Internship</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>BalaVignesh</td>
-                                            <td>React</td>
-                                            <td>$6000</td>
-                                            <td>4 months</td>
-                                            <td>Certificate Course</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Mala</td>
-                                            <td>Full Stack evelopment</td>
-                                            <td>4 months</td>
-                                            <td>$15000</td>
-                                            <td>Certificate course</td>
-                                        </tr>
+                                            <td><?php echo $row['sid'] ?></td>
+                                            <td><?php echo $row['studentname'] ?></td>
+                                            <td><?php echo $row['studentcourse'] ?></td>
+                                            <td><?php echo $row['joindate'] ?></td>
+                                            <td><?php echo $row['studentphone'] ?></td>
+                                            <td><?php echo $row['studentemail'] ?></td>
+                                            <td><?php echo $row['studentaddress'] ?></td>
+                                            <td>
+                                                <a href="editstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-info btn-sm" ><i class="fa-solid fa-pen" style="color: #ffffff;"></i>  Edit</a>
+                                                <a href="editstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-danger" name="delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>  Delete</a>
 
+                                            </td>
+                                            
+                                        </tr>    
+                                        <?php } ?>                                    
                                     </tbody>
                                 </table>
                             </div>

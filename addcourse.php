@@ -46,99 +46,95 @@
                 <?php 
                 include('./topbar.php');
                 ?>
-                <!-- End of Topbar -->
 
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-
                     <!-- Page Heading -->
-
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                     <?php
                     include('./message.php');
                     ?>
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Add Student</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Add Course</h6>
                         </div>
                         <div class="card-body">
                             <form method="post">
-                                
                                 <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Student Name:</label>
-                                    <input type="text" name="studentname" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
+                                    <label for="exampleFormControlInput1" class="form-label">Course Name:</label>
+                                    <input type="text" class="form-control" name="coursename" id="exampleFormControlInput1" placeholder="Enter the Course name">
                                 </div>
                                 <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Student's Course:</label>
-                                    <input type="text" name="studentcourse" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Course">
+                                    <label for="exampleFormControlInput1" class="form-label">Course Fees:</label>
+                                    <input type="text" class="form-control" name="coursefees" id="exampleFormControlInput1" placeholder="Enter the Course fees">
                                 </div>
                                 <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Join Date</label>
-                                    <input type="date" name="joindate" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Course">
+                                    <label for="exampleFormControlInput1" class="form-label">Course Duration:</label>
+                                    <input type="text" class="form-control" name="courseduration" id="exampleFormControlInput1">
                                 </div>
                                 <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Student`s Phone:</label>
-                                    <input type="number" name="studentphone" class="form-control" id="exampleFormControlInput1">
-                                </div>
-                                <!-- <div class="mb-2">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Course Syllabus</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div> -->
-                                <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Student`s Email:</label>
-                                    <input type="email" name="studentemail" class="form-control" id="exampleFormControlInput1">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Course Syllabus:</label>
+                                    <textarea class="form-control" name="coursesyllabus" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
                                 <div class="mb-2">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Address:</label>
-                                    <textarea class="form-control" name="studentaddress" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <label for="exampleFormControlTextarea1" class="form-label">Category:</label>
+                                    <select class="form-select" aria-label="Default select example" name="category">
+                                        <option selected>select category</option>
+                                        <option value="Internship">Internship</option>
+                                        <option value="Certificate Course">certificate course</option>
+                                        <option value="Project">project</option>
+                                    </select>
                                 </div>
-    
                                 <div class="mb-2">
-                                    <button type="submit" name="add" class="btn btn-primary">Add</button>
+                                    <label for="exampleFormControlInput1" class="form-label">Course status:</label>
+                                    <select class="form-select" aria-label="Default select example" name="status">
+                                        <option selected>select Status</option>
+                                        <option value="Active">Active</option>
+                                        <option value="InActive">InActive</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <button type="submit" name="add" class="btn btn-dark">Add Course</button>
                                 </div>
                             </form>
                         </div>
                     </div>
-
-
-
-
                 </div>
                 <!-- /.container-fluid -->
-
-
             </div>
-            <!-- End of Main Content -->
-
             <?php
             include('./db.php');
-            if(isset($_POST['add'])){
-                $sid=0;
-                $studentname=$_POST['studentname'];
-                $studentcourse=$_POST['studentcourse'];
-                $joindate=$_POST['joindate'];
-                $studentphone=$_POST['studentphone'];
-                $studentemail=$_POST['studentemail'];
-                $studentaddress=$_POST['studentaddress'];
-                $query = "insert into addstudent values('$sid','$studentname','$studentcourse','$joindate','$studentphone','$studentemail','$studentaddress')";
-                $ex = mysqli_query($db, $query);
+            if (isset($_POST['add'])) {
+                $cid = 0;
+                $coursename = $_POST['coursename'];
+                $coursefees = $_POST['coursefees'];
+                $courseduration = $_POST['courseduration'];
+                $coursesyllabus = $_POST['coursesyllabus'];
+                $category = $_POST['category'];
+                $status = $_POST['status'];
+                $in = "insert into addcourse values('$cid','$coursename','$coursefees','$courseduration','$coursesyllabus','$category','$status')";
+                $ex = mysqli_query($db, $in);
                 if ($ex) {
 
                     //echo "<script>window.location.href='addcourse.php'</script>";
                     $_SESSION['message']="Course added Successfuly!!!";
-                    header("Loction: addstudent.php");
+                    header("Loction: addcourse.php");
                     exit(0);
                 }
                 else
                 {
                     $_SESSION['message']="Course added not Successfuly!!!";
-                    header("Loction: addstudent.php");
+                    header("Loction: addcourse.php");
                     exit(0);
                 }
             }
-                 
             ?>
+            <!-- End of Main Content -->
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -148,7 +144,6 @@
                 </div>
             </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 
@@ -168,7 +163,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">Ã—</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
