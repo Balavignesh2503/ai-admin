@@ -67,7 +67,7 @@
 
                                         if (mysqli_num_rows($execute) > 0) {
                                             $student = mysqli_fetch_array($execute);
-                                            //    print_r($course);
+                                            //    print_r($student);
                                     ?><br>
                                             <input type="hidden" class="form-control" value="<?= $student['sid']; ?>" name="sid" id="exampleFormControlInput1" placeholder="Enter the Course name">
                                             <label for="exampleFormControlInput1" class="form-label">Student Name:</label>
@@ -104,20 +104,21 @@
                                             // session_start();
                                             if (isset($_POST['edit'])) {
                                                 if (isset($_POST['sid'])) {
-                                                    $sid=$_POST['sid'];
-                                                    $studentname=$_POST['studentname'];
-                                                    $studentcourse=$_POST['studentcourse'];
-                                                    $joindate=$_POST['joindate'];
-                                                    $studentphone=$_POST['studentphone'];
-                                                    $studentemail=$_POST['studentemail'];
-                                                    $studentaddress=$_POST['studentaddress'];
+                                                    $sid=mysqli_real_escape_string($db,$_POST['sid']);
+                                                    $studentname=mysqli_real_escape_string($db,$_POST['studentname']);
+                                                    $studentcourse=mysqli_real_escape_string($db,$_POST['studentcourse']);
+                                                    $joindate=mysqli_real_escape_string($db,$_POST['joindate']);
+                                                    $studentphone=mysqli_real_escape_string($db,$_POST['studentphone']);
+                                                    $studentemail=mysqli_real_escape_string($db,$_POST['studentemail']);
+                                                    $studentaddress=mysqli_real_escape_string($db,$_POST['studentaddress']);
+                                                    print_r($sid);
 
-                                                    $query = "update addcourse set studentname='$studentname',studentcourse='$studentcourse',joindate='$joindate',studentphone='$studentphone',studentemail='$studentemail',studentaddress='$studentaddress' where sid='$sid' ";
+                                                    $query = "update addstudent set studentname='$studentname',studentcourse='$studentcourse',joindate='$joindate',studentphone='$studentphone',studentemail='$studentemail',studentaddress='$studentaddress' where sid='$sid' ";
                                                     $ex = mysqli_query($db, $query);
                                                     if ($ex) {
                                                         // echo "Updated Successfully!!!";
                                                         $_SESSION['message'] = "Course Updated Successfuly!!!";
-                                                        echo "<script>window.location.href='Listcourse.php'</script>";
+                                                        echo "<script>window.location.href='currentstudents.php'</script>";
                                                         exit(0);
                                                     } else {
                                                         // echo "Not Updated!!! ";
@@ -134,12 +135,12 @@
                                     <?php
                                             include('./db.php');
                                             if (isset($_POST['delete'])) {
-                                                $course_id = mysqli_real_escape_string($db, $_POST['cid']);
-                                                $query = "DELETE from addcourse WHERE cid='$course_id'";
+                                                $sid = mysqli_real_escape_string($db, $_POST['sid']);
+                                                $query = "DELETE from addstudent WHERE sid='$sid'";
                                                 $ex = mysqli_query($db, $query);
                                                 if ($ex) {
                                                     $_SESSION['message'] = "Course Deleted Successfuly!!!";
-                                                    echo "<script>window.location.href='Listcourse.php'</script>";
+                                                    echo "<script>window.location.href='currentstudents.php'</script>";
                                                     exit(0);
                                                 } else {
                                                     $_SESSION['message'] = "Course not Updated!!!";
