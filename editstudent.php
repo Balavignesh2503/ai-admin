@@ -55,47 +55,47 @@
                             <h6 class="m-0 font-weight-bold text-primary">Edit Student</h6>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="#">
+                            <form method="POST">
                                 <div class="mb-2">
                                     <?php
                                     include('./db.php');
                                     // include('./ListCourse.php');
                                     if (isset($_GET['sid'])) {
                                         $student_id = mysqli_real_escape_string($db, $_GET['sid']);
-                                        $query = "select * from addstudent where cid='$student_id'";
+                                        $query = "select * from addstudent where sid='$student_id'";
                                         $execute = mysqli_query($db, $query);
 
                                         if (mysqli_num_rows($execute) > 0) {
                                             $student = mysqli_fetch_array($execute);
                                             //    print_r($course);
                                     ?><br>
-                                            <input type="hidden" class="form-control" value="<?= $student['cid']; ?>" name="cid" id="exampleFormControlInput1" placeholder="Enter the Course name">
-                                            <label for="exampleFormControlInput1" class="form-label">Course Name:</label>
-                                            <input type="text" class="form-control" value="<?= $student['course_name']; ?>" name="coursename" id="exampleFormControlInput1" placeholder="Enter the Course name">
+                                            <input type="hidden" class="form-control" value="<?= $student['sid']; ?>" name="sid" id="exampleFormControlInput1" placeholder="Enter the Course name">
+                                            <label for="exampleFormControlInput1" class="form-label">Student Name:</label>
+                                            <input type="text" class="form-control" value="<?= $student['studentname']; ?>" name="studentname" id="exampleFormControlInput1" placeholder="Enter the Student Name">
                                 </div>
                                 <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Course Fees:</label>
-                                    <input type="text" class="form-control" value="<?= $course['course_fees']; ?>" name="coursefees" id="exampleFormControlInput1" placeholder="Enter the Course fees">
+                                    <label for="exampleFormControlInput1" class="form-label">Student's Course:</label>
+                                    <input type="text" class="form-control" value="<?= $student['studentcourse']; ?>" name="studentcourse" id="exampleFormControlInput1" placeholder="Enter the Student's Course">
                                 </div>
                                 <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Course Duration:</label>
-                                    <input type="text" class="form-control" value="<?= $course['course_duration']; ?>" name="courseduration" id="exampleFormControlInput1">
+                                    <label for="exampleFormControlInput1" class="form-label">Join Date</label>
+                                    <input type="date" class="form-control" value="<?= $student['joindate']; ?>" name="joindate" id="exampleFormControlInput1">
                                 </div>
                                 <div class="mb-2">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Course Syllabus:</label>
+                                    <label for="exampleFormControlTextarea1" class="form-label">Student`s Phone:</label>
                                     <!--<textarea class="form-control" name="coursesyllabus"  id="exampleFormControlTextarea1" rows="3"></textarea>-->
-                                    <input type="text" class="form-control" value="<?= $course['course_syllabus']; ?>" name="coursesyllabus">
+                                    <input type="text" class="form-control" value="<?= $student['studentphone']; ?>" name="studentphone">
                                 </div>
                                 <div class="mb-2">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Category:</label>
-                                    <input class="form-control" type="text" value="<?= $course['category']; ?>" name="category">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Student`s Email:</label>
+                                    <input class="form-control" type="text" value="<?= $student['studentemail']; ?>" name="studentemail">
                                     <!-- <option value="Internship">Internship</option>
                                         <option value="Certificate Course">certificate course</option>
                                         <option value="Project">project</option> -->
                                 </div>
                                 <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Course status:</label>
-                                    <input class="form-control" value="<?= $course['status']; ?>" name="status" />
+                                    <label for="exampleFormControlInput1" class="form-label">Address:</label>
+                                    <input class="form-control" value="<?= $student['studentaddress']; ?>" name="studentaddress" />
                                 </div>
                                 <div class="mb-2">
                                     <button type="submit" name="edit" class="btn btn-dark">Update Course</button>
@@ -103,17 +103,16 @@
                                             include('./db.php');
                                             // session_start();
                                             if (isset($_POST['edit'])) {
-                                                if (isset($_POST['cid'])) {
-                                                    $course_id = mysqli_real_escape_string($db, $_POST['cid']);
-                                                    //$course_id = mysqli_real_escape_string($db, $_POST['cid']);
-                                                    $coursename = mysqli_real_escape_string($db, $_POST['coursename']);
-                                                    $coursefees = mysqli_real_escape_string($db, $_POST['coursefees']);
-                                                    $courseduration = mysqli_real_escape_string($db, $_POST['courseduration']);
-                                                    $coursesyllabus = mysqli_real_escape_string($db, $_POST['coursesyllabus']);
-                                                    $category = mysqli_real_escape_string($db, $_POST['category']);
-                                                    $status = mysqli_real_escape_string($db, $_POST['status']);
+                                                if (isset($_POST['sid'])) {
+                                                    $sid=$_POST['sid'];
+                                                    $studentname=$_POST['studentname'];
+                                                    $studentcourse=$_POST['studentcourse'];
+                                                    $joindate=$_POST['joindate'];
+                                                    $studentphone=$_POST['studentphone'];
+                                                    $studentemail=$_POST['studentemail'];
+                                                    $studentaddress=$_POST['studentaddress'];
 
-                                                    $query = "update addcourse set course_name='$coursename',course_fees='$coursefees',course_duration='$courseduration',course_syllabus='$coursesyllabus',category='$category',status='$status' where cid='$course_id' ";
+                                                    $query = "update addcourse set studentname='$studentname',studentcourse='$studentcourse',joindate='$joindate',studentphone='$studentphone',studentemail='$studentemail',studentaddress='$studentaddress' where sid='$sid' ";
                                                     $ex = mysqli_query($db, $query);
                                                     if ($ex) {
                                                         // echo "Updated Successfully!!!";
