@@ -96,7 +96,7 @@
                                 
                                 <div class="mb-2">
                                 <label for="exampleFormControlInput1" class="form-label">Student's Course:</label>
-                                <select class="form-select" aria-label="Default select example" id="studentcourse" name="studentcourse">
+                                <select onchange="getcourse()" class="form-select" aria-label="Default select example" id="studentcourse" name="studentcourse">
                                     <?php if(isset($_GET['sid'])){?>                                    
                                     <option value="<?php echo $studentdata['studentcourse']?>" selected><?php echo $studentdata['studentcourse']?></option>
                                     <?php }else{?>
@@ -214,11 +214,20 @@
                                     <textarea class="form-control" name="studentaddress" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>  
                                     <?php }?>
+                                    <?php if(isset($_POST['studentcourse'])){
+                                        echo $_POST['studentcourse'];
+                                    }
+                                     ?>
 
                                 <div class="mb-2">
                                 <label for="exampleFormControlInput1" class="form-label">Fees</label>
-                                <input type="text" name="fees" value="{}" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
+                                <input type="text" name="fees" id="fees" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
                             </div>
+                            <script>
+                                function getcourse(){
+                                    var fees = 
+                                }
+                            </script>
                             <div class="mb-2">
                                 <label for="exampleFormControlInput1" class="form-label">Advance</label>
                                 <input type="text" name="advance" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
@@ -227,13 +236,13 @@
     
                                 <div class="mb-2">
                                 <?php if(isset($_GET['sid'])){?>                                    
-                                    <button type="submit" name="edit" class="btn btn-dark">Update Course</button>
+                                    <button type="submit" name="edit" class="btn btn-dark">Update Student</button>
                                     <?php
                                             include('./db.php');
                                             // session_start();
                                             if (isset($_POST['edit'])) {
-                                                if (isset($_POST['sid'])) {
-                                                    $sid=mysqli_real_escape_string($db,$_POST['sid']);
+                                                if (isset($_GET['sid'])) {
+                                                    $sid=mysqli_real_escape_string($db,$_GET['sid']);
                                                     $studentname=mysqli_real_escape_string($db,$_POST['studentname']);
                                                     $studentcourse=mysqli_real_escape_string($db,$_POST['studentcourse']);
                                                     $studentcollege=mysqli_real_escape_string($db,$_POST['studentcollege']);
@@ -259,15 +268,14 @@
                                                         exit(0);
                                                     }
                                                 }
-                                            } else {
-                                                // echo "cid is not set in POST data.";
-                                            }
+                                            } 
                                     ?>
-                                    <button type="submit" name="delete" class="btn btn-dark">Delete Course</button>
+                                    <button type="submit" name="delete" class="btn btn-dark">Delete Student</button>
+                                    <?php echo $_GET['sid']?>
                                     <?php
                                             include('./db.php');
                                             if (isset($_POST['delete'])) {
-                                                $sid = mysqli_real_escape_string($db, $_POST['sid']);
+                                                $sid = mysqli_real_escape_string($db, $_GET['sid']);
                                                 $query = "DELETE from addstudent WHERE sid='$sid'";
                                                 $ex = mysqli_query($db, $query);
                                                 if ($ex) {
@@ -278,9 +286,7 @@
                                                     $_SESSION['message'] = "Course not Updated!!!";
                                                     exit(0);
                                                 }
-                                            } else {
-                                                // echo "cid is not set in POST data.";
-                                            }
+                                            } 
                                     ?>
                                     <?php }else{?>
                                         <button type="submit" name="add" class="btn btn-primary">Add</button>
@@ -316,17 +322,18 @@
                 $studentaddress=$_POST['studentaddress'];
                 $query = "insert into addstudent values('$sid','$studentname','$studentcourse','$studentcollege','$studentdegree','$department','$joindate','$studentphone','$studentemail','$studentaddress')";
                 $ex = mysqli_query($db, $query);
+
                 if ($ex) {
 
                     
                     $_SESSION['message']="Course added Successfuly!!!";
-                    header("Loction: addstudent.php");
+                    echo "<script>window.location.href='addstudent.php'</script>";
                     exit(0);
                 }
                 else
                 {
                     $_SESSION['message']="Course added not Successfuly!!!";
-                    header("Loction: addstudent.php");
+                    echo "<script>window.location.href='addstudent.php'</script>";
                     exit(0);
                 }
             }

@@ -107,7 +107,7 @@
                                             <td><?php echo $row['studentaddress'] ?></td>
                                             <td>
                                                 <a href="addstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-info btn-sm" ><i class="fa-solid fa-pen" style="color: #ffffff;"></i>  Edit</a>
-                                                <a href="editstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-danger" name="delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>  Delete</a>
+                                                <a href="addstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-danger" name="delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>  Delete</a>
 
                                             </td>
                                             

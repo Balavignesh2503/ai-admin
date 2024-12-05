@@ -71,6 +71,9 @@
                                             <th>S.No</th>
                                             <th>Students Name</th>
                                             <th>Students Course </th>
+                                            <th>Student College</th>
+                                            <th>Student Degree</th>
+                                            <th>Student Department</th>
                                             <th>Join Date</th>
                                             <th>Student Phone</th>
                                             <th>Student Email</th>
@@ -95,13 +98,16 @@
                                             <td><?php echo $row['sid'] ?></td>
                                             <td><?php echo $row['studentname'] ?></td>
                                             <td><?php echo $row['studentcourse'] ?></td>
+                                            <td><?php echo $row['studentcollege'] ?></td>
+                                            <td><?php echo $row['studentdegree'] ?></td>
+                                            <td><?php echo $row['department'] ?></td>
                                             <td><?php echo $row['joindate'] ?></td>
                                             <td><?php echo $row['studentphone'] ?></td>
                                             <td><?php echo $row['studentemail'] ?></td>
                                             <td><?php echo $row['studentaddress'] ?></td>
                                             <td>
-                                                <a href="editstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-info btn-sm" ><i class="fa-solid fa-pen" style="color: #ffffff;"></i>  Edit</a>
-                                                <a href="editstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-danger" name="delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>  Delete</a>
+                                                <a href="addstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-info btn-sm" ><i class="fa-solid fa-pen" style="color: #ffffff;"></i>  Edit</a>
+                                                <a href="addstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-danger" name="delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>  Delete</a>
 
                                             </td>
                                             
