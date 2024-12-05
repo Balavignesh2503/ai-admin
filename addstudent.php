@@ -59,43 +59,233 @@
                     <?php
                     include('./message.php');
                     ?>
+                    <?php
+                        include('./db.php');
+                        if (isset($_GET['sid'])) {
+                            $sid = $_GET['sid'];
+                            $studentdata = mysqli_fetch_assoc(mysqli_query($db, "select * from addstudent where sid='$sid'"));
+                        }
+                        ?>
                         <div class="card-header py-3">
+                        <?php if (isset($_GET['sid'])){ ?>
+                            <h6 class="m-0 font-weight-bold text-primary">Edit Student</h6>
+                        <?php }else{?>
+                        
                             <h6 class="m-0 font-weight-bold text-primary">Add Student</h6>
+                        <?php }?>
                         </div>
                         <div class="card-body">
                             <form method="post">
-                                
+                            <?php if (isset($_GET['sid'])){ ?>
+                                <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Student Name:</label>
+                                    <input type="text" name="studentname" value="<?php echo $studentdata['studentname']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
+                                </div>
+                                <?php }else{?>
                                 <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Student Name:</label>
                                     <input type="text" name="studentname" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
                                 </div>
+                                <?php }?>
+
+                                <?php
+                                include('./db.php');
+                                $sql = "SELECT * FROM addcourse";
+                                $data = $db->query($sql);
+                                ?>
+                                
                                 <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Student's Course:</label>
-                                    <input type="text" name="studentcourse" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Course">
-                                </div>
+                                <label for="exampleFormControlInput1" class="form-label">Student's Course:</label>
+                                <select class="form-select" aria-label="Default select example" id="studentcourse" name="studentcourse">
+                                    <?php if(isset($_GET['sid'])){?>                                    
+                                    <option value="<?php echo $studentdata['studentcourse']?>" selected><?php echo $studentdata['studentcourse']?></option>
+                                    <?php }else{?>
+                                    <option value="" disabled selected>select</option>
+                                    <?php }?>
+                                    
+                                    <?php foreach ($data as $course) { ?>
+                                        <option value="<?php echo htmlspecialchars($course['cid']) ?>"><?php echo htmlspecialchars($course['course_name']) ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <?php 
+                            $sql = "SELECT * FROM college";
+                            $data = $db->query($sql);
+                               
+                            ?>
+                                <div class="mb-2">
+                                <label for="status" class="form-label">Student`s College:</label>
+                                <select class="form-select" aria-label="Default select example" name="studentcollege" id="status">
+                                <?php if(isset($_GET['sid'])){?>                                    
+                                    <option value="<?php echo $studentdata['studentcollege']?>" selected><?php echo $studentdata['studentcollege']?></option>
+                                    <?php }else{?>
+                                    <option value="" disabled selected>select</option>
+                                    <?php }?>
+                                <?php foreach ($data as $clg) { ?>
+                                        <option value="<?php echo htmlspecialchars($clg['id']) ?>"><?php echo htmlspecialchars($clg['collegename']) ?></option>
+                                    <?php } ?>                               
+                                </select>
+                            </div>
+                            <?php 
+                            $sql = "SELECT * FROM adddegree";
+                            $data = $db->query($sql);
+                               
+                            ?>
+                            <div class="mb-2">
+                                <label for="degree" class="form-label">Degree :</label>
+                                <select class="form-select" id="degree" name="studentdegree">
+                                <?php if(isset($_GET['sid'])){?>                                    
+                                    <option value="<?php echo $studentdata['studentdegree']?>" selected><?php echo $studentdata['studentdegree']?></option>
+                                    <?php }else{?>
+                                    <option value="" disabled selected>select</option>
+                                    <?php }?>
+                                    <?php foreach($data as $degree){?>
+                                    <option value="<?php echo htmlspecialchars($degree['id'])?>"><?php echo htmlspecialchars($degree['degreename'])?></option>
+                                    <?php }?>
+                                </select>
+                            </div>
+                            <?php 
+                            $sql = "SELECT * FROM department";
+                            $data = $db->query($sql);
+                            ?>
+
+                            <div class="mb-2">
+                                <label for="department" class="form-label">Department:</label>
+                                <select class="form-select" id="department" name="department">
+                                <?php if(isset($_GET['sid'])){?>                                    
+                                    <option value="<?php echo $studentdata['department']?>" selected><?php echo $studentdata['department']?></option>
+                                    <?php }else{?>
+                                    <option value="" disabled selected>select</option>
+                                    <?php }?>
+                                    <?php foreach($data as $dept){?>
+                                        <option value="<?php echo htmlspecialchars($dept['id'])?>"><?php echo htmlspecialchars($dept['dptname'])?></option>
+                                    <?php }?>
+                                </select>
+                            </div>
+                            <?php if(isset($_GET['sid'])){?>                                    
                                 <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Join Date</label>
+                                    <input type="date" name="joindate" value=<?php echo $studentdata['joindate']?> class="form-control" id="exampleFormControlInput1" placeholder="Enter the Course">
+                                    </div>
+                                    <?php }else{?>
+                                    <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Join Date</label>
                                     <input type="date" name="joindate" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Course">
-                                </div>
-                                <div class="mb-2">
+                                    </div>
+                                    <?php }?>
+
+                                
+                                    <?php if(isset($_GET['sid'])){?>                                    
+                                    <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Student`s Phone:</label>
+                                    <input type="number" name="studentphone" value=<?php echo $studentdata['studentphone']?> class="form-control" id="exampleFormControlInput1">
+                                    </div>
+                                    <?php }else{?>
+                                        <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Student`s Phone:</label>
                                     <input type="number" name="studentphone" class="form-control" id="exampleFormControlInput1">
-                                </div>
+                                 </div>
+                                    <?php }?>
+                                
                                 <!-- <div class="mb-2">
                                     <label for="exampleFormControlTextarea1" class="form-label">Course Syllabus</label>
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div> -->
-                                <div class="mb-2">
+                                <?php if(isset($_GET['sid'])){?>                                    
+                                    <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Student`s Email:</label>
+                                    <input type="email" name="studentemail" value="<?php echo $studentdata['studentemail']?>" class="form-control" id="exampleFormControlInput1">
+                                    </div>
+                                    <?php }else{?>
+                                        <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Student`s Email:</label>
                                     <input type="email" name="studentemail" class="form-control" id="exampleFormControlInput1">
                                 </div>
-                                <div class="mb-2">
+                                    <?php }?>
+
+                                <?php if(isset($_GET['sid'])){?>                                    
+                                    <div class="mb-2">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Address:</label>
+                                    <textarea class="form-control" value="<?php echo $studentdata['studentaddress']?>" name="studentaddress" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                    <?php }else{?>
+                                        <div class="mb-2">
                                     <label for="exampleFormControlTextarea1" class="form-label">Address:</label>
                                     <textarea class="form-control" name="studentaddress" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                </div>
+                                </div>  
+                                    <?php }?>
+
+                                <div class="mb-2">
+                                <label for="exampleFormControlInput1" class="form-label">Fees</label>
+                                <input type="text" name="fees" value="{}" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
+                            </div>
+                            <div class="mb-2">
+                                <label for="exampleFormControlInput1" class="form-label">Advance</label>
+                                <input type="text" name="advance" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
+                            </div>
+                            <script></script>
     
                                 <div class="mb-2">
-                                    <button type="submit" name="add" class="btn btn-primary">Add</button>
+                                <?php if(isset($_GET['sid'])){?>                                    
+                                    <button type="submit" name="edit" class="btn btn-dark">Update Course</button>
+                                    <?php
+                                            include('./db.php');
+                                            // session_start();
+                                            if (isset($_POST['edit'])) {
+                                                if (isset($_POST['sid'])) {
+                                                    $sid=mysqli_real_escape_string($db,$_POST['sid']);
+                                                    $studentname=mysqli_real_escape_string($db,$_POST['studentname']);
+                                                    $studentcourse=mysqli_real_escape_string($db,$_POST['studentcourse']);
+                                                    $studentcollege=mysqli_real_escape_string($db,$_POST['studentcollege']);
+                                                    $studentdegree=mysqli_real_escape_string($db,$_POST['studentdegree']);
+                                                    $department=mysqli_real_escape_string($db,$_POST['department']);
+                                                    $joindate=mysqli_real_escape_string($db,$_POST['joindate']);
+                                                    $studentphone=mysqli_real_escape_string($db,$_POST['studentphone']);
+                                                    $studentemail=mysqli_real_escape_string($db,$_POST['studentemail']);
+                                                    $studentaddress=mysqli_real_escape_string($db,$_POST['studentaddress']);
+                                                    print_r($sid);
+
+                                                    $query = "update addstudent set studentname='$studentname',studentcourse='$studentcourse',studentcourse='$studentcourse',studentcourse='$studentcourse',studentcourse='$studentcourse',joindate='$joindate',studentphone='$studentphone',studentemail='$studentemail',studentaddress='$studentaddress' where sid='$sid' ";
+                                                    $ex = mysqli_query($db, $query);
+                                                    if ($ex) {
+                                                        // echo "Updated Successfully!!!";
+                                                        $_SESSION['message'] = "Course Updated Successfuly!!!";
+                                                        echo "<script>window.location.href='currentstudents.php'</script>";
+                                                        exit(0);
+                                                    } else {
+                                                        // echo "Not Updated!!! ";
+                                                        $_SESSION['message'] = "Course not Updated!!!";
+                                                        // header("Loction:editcourse.php");
+                                                        exit(0);
+                                                    }
+                                                }
+                                            } else {
+                                                // echo "cid is not set in POST data.";
+                                            }
+                                    ?>
+                                    <button type="submit" name="delete" class="btn btn-dark">Delete Course</button>
+                                    <?php
+                                            include('./db.php');
+                                            if (isset($_POST['delete'])) {
+                                                $sid = mysqli_real_escape_string($db, $_POST['sid']);
+                                                $query = "DELETE from addstudent WHERE sid='$sid'";
+                                                $ex = mysqli_query($db, $query);
+                                                if ($ex) {
+                                                    $_SESSION['message'] = "Course Deleted Successfuly!!!";
+                                                    echo "<script>window.location.href='currentstudents.php'</script>";
+                                                    exit(0);
+                                                } else {
+                                                    $_SESSION['message'] = "Course not Updated!!!";
+                                                    exit(0);
+                                                }
+                                            } else {
+                                                // echo "cid is not set in POST data.";
+                                            }
+                                    ?>
+                                    <?php }else{?>
+                                        <button type="submit" name="add" class="btn btn-primary">Add</button>
+                                    <?php }?>
+                                    
                                 </div>
                             </form>
                         </div>
@@ -117,15 +307,18 @@
                 $sid=0;
                 $studentname=$_POST['studentname'];
                 $studentcourse=$_POST['studentcourse'];
+                $studentcollege = $_POST['studentcollege'];
+                $studentdegree = $_POST['studentdegree'];
+                $department = $_POST['department'];
                 $joindate=$_POST['joindate'];
                 $studentphone=$_POST['studentphone'];
                 $studentemail=$_POST['studentemail'];
                 $studentaddress=$_POST['studentaddress'];
-                $query = "insert into addstudent values('$sid','$studentname','$studentcourse','$joindate','$studentphone','$studentemail','$studentaddress')";
+                $query = "insert into addstudent values('$sid','$studentname','$studentcourse','$studentcollege','$studentdegree','$department','$joindate','$studentphone','$studentemail','$studentaddress')";
                 $ex = mysqli_query($db, $query);
                 if ($ex) {
 
-                    //echo "<script>window.location.href='addcourse.php'</script>";
+                    
                     $_SESSION['message']="Course added Successfuly!!!";
                     header("Loction: addstudent.php");
                     exit(0);

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,10 +13,10 @@
     <title>Anjana InfoTech</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -35,101 +36,66 @@
         include('./nav.php');
         ?>
 
+
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
             <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
-                <?php 
+            <?php 
                 include('./topbar.php');
                 ?>
-                <!-- End of Topbar -->
-                 <?php 
-                 include('./db.php');
-                 $query = "SELECT * FROM addstudent";
-                 $exe = mysqli_query($db,$query);              
-                ?>
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-
                     <!-- Page Heading -->
-
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
+                    <?php
+                    include('./message.php');
+                    ?>
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">List of Current Students</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Add Degree</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>S.No</th>
-                                            <th>Students Name</th>
-                                            <th>Students Course </th>
-                                            <th>Student College</th>
-                                            <th>Student Degree</th>
-                                            <th>Student Department</th>
-                                            <th>Join Date</th>
-                                            <th>Student Phone</th>
-                                            <th>Student Email</th>
-                                            <th>Student Address</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <!-- <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
-                                        </tr>
-                                    </tfoot> -->
-                                    <tbody>
-                                    <?php
-                                    while ($row = mysqli_fetch_assoc($exe)) { ?>
-                                        <tr>
-                                            <td><?php echo $row['sid'] ?></td>
-                                            <td><?php echo $row['studentname'] ?></td>
-                                            <td><?php echo $row['studentcourse'] ?></td>
-                                            <td><?php echo $row['studentcollege'] ?></td>
-                                            <td><?php echo $row['studentdegree'] ?></td>
-                                            <td><?php echo $row['department'] ?></td>
-                                            <td><?php echo $row['joindate'] ?></td>
-                                            <td><?php echo $row['studentphone'] ?></td>
-                                            <td><?php echo $row['studentemail'] ?></td>
-                                            <td><?php echo $row['studentaddress'] ?></td>
-                                            <td>
-                                                <a href="addstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-info btn-sm" ><i class="fa-solid fa-pen" style="color: #ffffff;"></i>  Edit</a>
-                                                <a href="editstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-danger" name="delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>  Delete</a>
-
-                                            </td>
-                                            
-                                        </tr>    
-                                        <?php } ?>                                    
-                                    </tbody>
-                                </table>
-                            </div>
+                            <form method="post">
+                                <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Degree Name:</label>
+                                    <input type="text" class="form-control" name="degreename" id="exampleFormControlInput1" placeholder="Enter the Degree name">
+                                </div>
+                                <div class="mb-2">
+                                    <button type="submit" name="add" class="btn btn-dark">Add Degree</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-
-
-
                 </div>
                 <!-- /.container-fluid -->
-
-
             </div>
+            <?php
+            include('./db.php');
+            if (isset($_POST['add'])) {
+                $degreename=$_POST['degreename'];
+                // $coursename = $_POST['coursename'];
+                // $coursefees = $_POST['coursefees'];
+                // $courseduration = $_POST['courseduration'];
+                // $coursesyllabus = $_POST['coursesyllabus'];
+                // $category = $_POST['category'];
+                // $status = $_POST['status'];
+                $in = "insert into adddegree (degreename) values('$degreename')";
+                $ex = mysqli_query($db, $in);
+                if ($ex) {
+                    // $_SESSION['message']="Degree added Successfuly!!!";
+                    echo "<script>window.location.href='./degree.php'</script>";
+                }
+                else
+                {
+                    $_SESSION['message']="Course added not Successfuly!!!";
+                    header("Location:adddegree.php");
+                    exit(0);
+                }
+            }
+            ?>
             <!-- End of Main Content -->
-
-
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -139,7 +105,6 @@
                 </div>
             </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 
