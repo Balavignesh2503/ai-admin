@@ -78,6 +78,9 @@
                                             <th>Student Phone</th>
                                             <th>Student Email</th>
                                             <th>Student Address</th>
+                                            <th>Fees</th>
+                                            <th>advance</th>
+                                            <th>remaining</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -104,7 +107,10 @@
                                             <td><?php echo $row['joindate'] ?></td>
                                             <td><?php echo $row['studentphone'] ?></td>
                                             <td><?php echo $row['studentemail'] ?></td>
-                                            <td><?php echo $row['studentaddress'] ?></td>
+                                            <td><?php echo $row['fees'] ?></td>
+                                            <td><?php echo $row['advance'] ?></td>
+                                            <td><?php echo $row['remaining'] ?></td>
+
                                             <td>
                                                 <a href="addstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-info btn-sm" ><i class="fa-solid fa-pen" style="color: #ffffff;"></i>  Edit</a>
                                                 <a href="addstudent.php?sid=<?php echo $row['sid']; ?>" class="btn btn-danger" name="delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>  Delete</a>

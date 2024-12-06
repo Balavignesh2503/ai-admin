@@ -96,7 +96,7 @@
                                 
                                 <div class="mb-2">
                                 <label for="exampleFormControlInput1" class="form-label">Student's Course:</label>
-                                <select onchange="getcourse()" class="form-select" aria-label="Default select example" id="studentcourse" name="studentcourse">
+                                <select onchange="getfees()" class="form-select" aria-label="Default select example" id="studentcourse" name="studentcourse">
                                     <?php if(isset($_GET['sid'])){?>                                    
                                     <option value="<?php echo $studentdata['studentcourse']?>" selected><?php echo $studentdata['studentcourse']?></option>
                                     <?php }else{?>
@@ -104,7 +104,7 @@
                                     <?php }?>
                                     
                                     <?php foreach ($data as $course) { ?>
-                                        <option value="<?php echo htmlspecialchars($course['cid']) ?>"><?php echo htmlspecialchars($course['course_name']) ?></option>
+                                        <option  data-fees="<?php echo htmlspecialchars($course['course_fees']) ?>" value="<?php echo htmlspecialchars($course['cid']) ?>"><?php echo htmlspecialchars($course['course_name']) ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -206,7 +206,7 @@
                                 <?php if(isset($_GET['sid'])){?>                                    
                                     <div class="mb-2">
                                     <label for="exampleFormControlTextarea1" class="form-label">Address:</label>
-                                    <textarea class="form-control" value="<?php echo $studentdata['studentaddress']?>" name="studentaddress" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <textarea class="form-control" name="studentaddress" id="exampleFormControlTextarea1" rows="3"><?php echo $studentdata['studentaddress']?></textarea>
                                 </div>
                                     <?php }else{?>
                                         <div class="mb-2">
@@ -218,20 +218,38 @@
                                         echo $_POST['studentcourse'];
                                     }
                                      ?>
+                                     <?php if(isset($_GET['sid'])){?>
 
                                 <div class="mb-2">
                                 <label for="exampleFormControlInput1" class="form-label">Fees</label>
-                                <input type="text" name="fees" id="fees" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
+                                <input type="text" value="<?php echo $studentdata['fees']?>" name="fees" id="fees" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Fees">
                             </div>
+                            <?php }else{?>
+                                <div class="mb-2">
+                                <label for="exampleFormControlInput1" class="form-label">Fees</label>
+                                <input type="text" name="fees" id="fees" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Fees">
+                            </div>
+                            <?php }?>
                             <script>
-                                function getcourse(){
-                                    var fees = 
+                                function getfees(){
+                                    var studentcourse = document.getElementById('studentcourse');
+                                    var selectedcourse = studentcourse.options[studentcourse.selectedIndex];
+                                    var fees = document.getElementById('fees');
+                                    var fee = selectedcourse.getAttribute('data-fees');
+                                    fees.value=fee ||''; 
                                 }
                             </script>
+                            <?php if(isset($_GET['sid'])){?>
                             <div class="mb-2">
                                 <label for="exampleFormControlInput1" class="form-label">Advance</label>
-                                <input type="text" name="advance" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
+                                <input type="text" value="<?php echo $studentdata['advance']?>" name="advance" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Advance Amount">
                             </div>
+                            <?php }else{?>
+                            <div class="mb-2">
+                                <label for="exampleFormControlInput1" class="form-label">Advance</label>
+                                <input type="text" name="advance" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Advance Amount">
+                            </div>
+                            <?php }?>
                             <script></script>
     
                                 <div class="mb-2">
@@ -252,9 +270,12 @@
                                                     $studentphone=mysqli_real_escape_string($db,$_POST['studentphone']);
                                                     $studentemail=mysqli_real_escape_string($db,$_POST['studentemail']);
                                                     $studentaddress=mysqli_real_escape_string($db,$_POST['studentaddress']);
-                                                    print_r($sid);
+                                                    $fees=mysqli_real_escape_string($db,$_POST['fees']);
+                                                    $advance=mysqli_real_escape_string($db,$_POST['advance']);
+                                                    $remaining=$fees-$advance;
+                                                   // print_r($sid);
 
-                                                    $query = "update addstudent set studentname='$studentname',studentcourse='$studentcourse',studentcourse='$studentcourse',studentcourse='$studentcourse',studentcourse='$studentcourse',joindate='$joindate',studentphone='$studentphone',studentemail='$studentemail',studentaddress='$studentaddress' where sid='$sid' ";
+                                                    $query = "update addstudent set studentname='$studentname',studentcourse='$studentcourse',studentcourse='$studentcourse',studentcourse='$studentcourse',studentcourse='$studentcourse',joindate='$joindate',studentphone='$studentphone',studentemail='$studentemail',studentaddress='$studentaddress',fees='$fees',advance='$advance',remaining='$remaining' where sid='$sid' ";
                                                     $ex = mysqli_query($db, $query);
                                                     if ($ex) {
                                                         // echo "Updated Successfully!!!";
@@ -271,7 +292,7 @@
                                             } 
                                     ?>
                                     <button type="submit" name="delete" class="btn btn-dark">Delete Student</button>
-                                    <?php echo $_GET['sid']?>
+                                   
                                     <?php
                                             include('./db.php');
                                             if (isset($_POST['delete'])) {
@@ -320,7 +341,10 @@
                 $studentphone=$_POST['studentphone'];
                 $studentemail=$_POST['studentemail'];
                 $studentaddress=$_POST['studentaddress'];
-                $query = "insert into addstudent values('$sid','$studentname','$studentcourse','$studentcollege','$studentdegree','$department','$joindate','$studentphone','$studentemail','$studentaddress')";
+                $fees=$_POST['fees'];
+                $advance=$_POST['advance'];
+                $remaining=$fees-$advance;
+                $query = "insert into addstudent values('$sid','$studentname','$studentcourse','$studentcollege','$studentdegree','$department','$joindate','$studentphone','$studentemail','$studentaddress','$fees','$advance','$remaining')";
                 $ex = mysqli_query($db, $query);
 
                 if ($ex) {
