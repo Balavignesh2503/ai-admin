@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2024 at 02:44 AM
+-- Generation Time: Dec 08, 2024 at 02:37 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -42,13 +42,15 @@ CREATE TABLE `addcourse` (
 --
 
 INSERT INTO `addcourse` (`cid`, `course_name`, `course_fees`, `course_duration`, `course_syllabus`, `category`, `status`) VALUES
-(1, 'PHP', '14000', '2 months', 'Basic PHP Functions,Advanced PHP,Web Designing.', 'Certificate Course', 'Active'),
+(1, 'PHP', '15000', '2 months', 'Basic PHP Functions,Advanced PHP,Web Designing.', 'Certificate Course', 'Active'),
 (2, 'React  js', '14000', '2 months', 'Basic React Functions,MERN Stack Development.', 'Certificate Course', 'Active'),
 (3, 'Angular ', '16000', '3 months', 'Basic Angular Functions,MEAN Stack Development.', 'Certificate Course', 'Active'),
 (4, 'IOT', '4500', '20 days', 'Basic IOT,Developing IOT projects.', 'Internship', 'Active'),
 (5, 'React  Beginner', '10000', '2 months', 'React Beginner', 'Internship', 'Active'),
 (6, 'java', '5000', '2 months', 'Java Basics,Oops Concept.', 'Certificate Course', 'Active'),
-(9, 'Android ', '14000', '2 months', 'Basic Android to App Development', 'Internship', 'Active');
+(9, 'Android ', '14000', '2 months', 'Basic Android to App Development', 'Internship', 'Active'),
+(53, '', '', '', '', 'select category', 'select Status'),
+(54, '', '', '', '', 'select category', 'select Status');
 
 -- --------------------------------------------------------
 
@@ -86,18 +88,23 @@ CREATE TABLE `addstudent` (
   `joindate` date NOT NULL,
   `studentphone` int(10) NOT NULL,
   `studentemail` varchar(150) NOT NULL,
-  `studentaddress` varchar(150) NOT NULL
+  `studentaddress` varchar(150) NOT NULL,
+  `fees` int(50) NOT NULL,
+  `advance` int(50) NOT NULL,
+  `remaining` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `addstudent`
 --
 
-INSERT INTO `addstudent` (`sid`, `studentname`, `studentcourse`, `studentcollege`, `studentdegree`, `department`, `joindate`, `studentphone`, `studentemail`, `studentaddress`) VALUES
-(1, 'vignesh', '2', '1', '2', '4', '2024-12-06', 986543210, 'bala@gmail.com', 'sdfgh'),
-(2, 'bala', '2', '1', '2', '4', '2024-12-06', 2147483647, 'bala@gmail.com', 'qwertyuio'),
-(3, 'balavignesh', '2', '1', '2', '4', '2024-12-06', 986543210, 'bala@gmail.com', ''),
-(4, 'balavignesh', '2', '1', '2', '4', '2024-12-06', 986543210, 'bala@gmail.com', '');
+INSERT INTO `addstudent` (`sid`, `studentname`, `studentcourse`, `studentcollege`, `studentdegree`, `department`, `joindate`, `studentphone`, `studentemail`, `studentaddress`, `fees`, `advance`, `remaining`) VALUES
+(1, 'paul', '6', '1', '1', '4', '2024-12-06', 986543210, 'bala@gmail.com', 'asdfg', 5000, 2000, 3000),
+(2, 'balan', '6', '1', '1', '4', '2024-12-06', 986543210, 'bala@gmail.com', 'asdfgh', 5000, 2000, 3000),
+(3, 'vignesh', '1', '1', '1', '4', '2022-03-25', 986543210, 'bala@gmail.com', 'qwertyui', 15000, 2000, 13000),
+(4, 'Muthulakshmi', '', '', '', '', '0000-00-00', 0, '', '', 0, 0, 0),
+(5, 'Muthulakshmi', '1', '1', '1', '4', '2023-03-25', 986543210, 'bala@gmail.com', 'cxvcvb', 15000, 2000, 13000),
+(6, '', '', '', '', '', '0000-00-00', 0, '', '', 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -195,7 +202,7 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `addcourse`
 --
 ALTER TABLE `addcourse`
-  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `cid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `adddegree`
@@ -207,7 +214,7 @@ ALTER TABLE `adddegree`
 -- AUTO_INCREMENT for table `addstudent`
 --
 ALTER TABLE `addstudent`
-  MODIFY `sid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `sid` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `college`
