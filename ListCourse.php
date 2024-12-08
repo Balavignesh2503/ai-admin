@@ -120,11 +120,11 @@
                                             </td>
                                             <td>
                                                 <!-- Edit Button-->
-                                                    <a href="editcourse.php?cid=<?php echo $row['cid']; ?>" class="btn btn-info btn-sm" ><i class="fa-solid fa-pen" style="color: #ffffff;"></i>Edit</a>
+                                                    <a href="addcourse.php?cid=<?php echo $row['cid']; ?>" class="btn btn-info btn-sm" ><i class="fa-solid fa-pen" style="color: #ffffff;"></i>Edit</a>
                                                 <br><br>
                                                 <!-- Delete Button -->
                                                  <form action="editcourse.php" method="POST">
-                                                <a href="editcourse.php?cid=<?php echo $row['cid']; ?>" class="btn btn-danger" name="delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>Delete</a>
+                                                <a href="addcourse.php?cid=<?php echo $row['cid']; ?>" class="btn btn-danger" name="delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>Delete</a>
                                                 </form>
                                                     <!-- <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash" style="color: #ffffff;"></i>Delete</button> -->
                                                 </form>

@@ -122,7 +122,7 @@
                                     <option value="" disabled selected>select</option>
                                     <?php }?>
                                 <?php foreach ($data as $clg) { ?>
-                                        <option value="<?php echo htmlspecialchars($clg['id']) ?>"><?php echo htmlspecialchars($clg['collegename']) ?></option>
+                                        <option value="<?php echo htmlspecialchars($clg['collegename']) ?>"><?php echo htmlspecialchars($clg['collegename']) ?></option>
                                     <?php } ?>                               
                                 </select>
                             </div>
@@ -140,7 +140,7 @@
                                     <option value="" disabled selected>select</option>
                                     <?php }?>
                                     <?php foreach($data as $degree){?>
-                                    <option value="<?php echo htmlspecialchars($degree['id'])?>"><?php echo htmlspecialchars($degree['degreename'])?></option>
+                                    <option value="<?php echo htmlspecialchars($degree['degreename'])?>"><?php echo htmlspecialchars($degree['degreename'])?></option>
                                     <?php }?>
                                 </select>
                             </div>
@@ -158,7 +158,7 @@
                                     <option value="" disabled selected>select</option>
                                     <?php }?>
                                     <?php foreach($data as $dept){?>
-                                        <option value="<?php echo htmlspecialchars($dept['id'])?>"><?php echo htmlspecialchars($dept['dptname'])?></option>
+                                        <option value="<?php echo htmlspecialchars($dept['dptname'])?>"><?php echo htmlspecialchars($dept['dptname'])?></option>
                                     <?php }?>
                                 </select>
                             </div>
@@ -250,7 +250,7 @@
                                 <input type="text" name="advance" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Advance Amount">
                             </div>
                             <?php }?>
-                            <script>
+                            <!-- <script>
                                 function validateForm(event) {
     // Prevent form submission
     event.preventDefault();
@@ -328,7 +328,7 @@
     document.querySelector("form").submit();
 }
 
-                            </script>
+                            </script> -->
     
                                 <div class="mb-2">
                                 <?php if(isset($_GET['sid'])){?>                                    

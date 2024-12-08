@@ -46,6 +46,13 @@
                 <?php 
                 include('./topbar.php');
                 ?>
+                <?php
+                        include('./db.php');
+                        if (isset($_GET['cid'])) {
+                            $sid = $_GET['cid'];
+                            $studentdata = mysqli_fetch_assoc(mysqli_query($db, "select * from addstudent where sid='$sid'"));
+                        }
+                        ?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -60,9 +67,16 @@
                     <?php
                     include('./message.php');
                     ?>
+                    <?php if (isset($_GET['cid'])){ ?>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Edit Course</h6>
+                        </div>
+                        <?php }else{?>
+
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Add Course</h6>
                         </div>
+                        <?php }?>
                         <div class="card-body">
                             <form method="post">
                                 <div class="mb-2">
