@@ -49,8 +49,8 @@
                 <?php
                         include('./db.php');
                         if (isset($_GET['cid'])) {
-                            $sid = $_GET['cid'];
-                            $studentdata = mysqli_fetch_assoc(mysqli_query($db, "select * from addstudent where sid='$sid'"));
+                            $cid = $_GET['cid'];
+                            $coursedata = mysqli_fetch_assoc(mysqli_query($db, "select * from addcourse where cid='$cid'"));
                         }
                         ?>
 
@@ -79,23 +79,55 @@
                         <?php }?>
                         <div class="card-body">
                             <form method="post">
-                                <div class="mb-2">
+                            <?php if (isset($_GET['cid'])){ ?>
+                                <?php }else{?>
+                                    <?php }?>
+                                    <?php if (isset($_GET['cid'])){ ?>
+                                        <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Course Name:</label>
+                                    <input type="text" value="<?php echo $coursedata['course_name']?>" class="form-control" name="coursename" id="exampleFormControlInput1" placeholder="Enter the Course name">
+                                </div>
+                                <?php }else{?>
+                                    <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Course Name:</label>
                                     <input type="text" class="form-control" name="coursename" id="exampleFormControlInput1" placeholder="Enter the Course name">
                                 </div>
-                                <div class="mb-2">
+                                    <?php }?>
+                                    <?php if (isset($_GET['cid'])){ ?>
+                                        <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Course Fees:</label>
+                                    <input type="text" value="<?php echo $coursedata['course_fees']?>" class="form-control" name="coursefees" id="exampleFormControlInput1" placeholder="Enter the Course fees">
+                                </div>
+                                <?php }else{?>
+                                    <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Course Fees:</label>
                                     <input type="text" class="form-control" name="coursefees" id="exampleFormControlInput1" placeholder="Enter the Course fees">
                                 </div>
-                                <div class="mb-2">
+                                    <?php }?>
+                                    <?php if (isset($_GET['cid'])){ ?>
+                                        <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Course Duration:</label>
                                     <input type="text" class="form-control" name="courseduration" id="exampleFormControlInput1">
                                 </div>
-                                <div class="mb-2">
+                                <?php }else{?>
+                                    <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Course Duration:</label>
+                                    <input type="text" class="form-control" name="courseduration" id="exampleFormControlInput1">
+                                </div>
+                                    <?php }?>
+                                    <?php if (isset($_GET['cid'])){ ?>
+                                        <div class="mb-2">
                                     <label for="exampleFormControlTextarea1" class="form-label">Course Syllabus:</label>
                                     <textarea class="form-control" name="coursesyllabus" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
-                                <div class="mb-2">
+                                <?php }else{?>
+                                    <div class="mb-2">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Course Syllabus:</label>
+                                    <textarea class="form-control" name="coursesyllabus" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                                    <?php }?>
+                                    <?php if (isset($_GET['cid'])){ ?>
+                                        <div class="mb-2">
                                     <label for="exampleFormControlTextarea1" class="form-label">Category:</label>
                                     <select class="form-select" aria-label="Default select example" name="category">
                                         <option selected>select category</option>
@@ -104,7 +136,19 @@
                                         <option value="Project">project</option>
                                     </select>
                                 </div>
-                                <div class="mb-2">
+                                <?php }else{?>
+                                    <div class="mb-2">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Category:</label>
+                                    <select class="form-select" aria-label="Default select example" name="category">
+                                        <option selected>select category</option>
+                                        <option value="Internship">Internship</option>
+                                        <option value="Certificate Course">certificate course</option>
+                                        <option value="Project">project</option>
+                                    </select>
+                                </div>
+                                    <?php }?>
+                                    <?php if (isset($_GET['cid'])){ ?>
+                                        <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Course status:</label>
                                     <select class="form-select" aria-label="Default select example" name="status">
                                         <option selected>select Status</option>
@@ -112,9 +156,32 @@
                                         <option value="InActive">InActive</option>
                                     </select>
                                 </div>
-                                <div class="mb-2">
+                                <?php }else{?>
+                                    <div class="mb-2">
+                                    <label for="exampleFormControlInput1" class="form-label">Course status:</label>
+                                    <select class="form-select" aria-label="Default select example" name="status">
+                                        <option selected>select Status</option>
+                                        <option value="Active">Active</option>
+                                        <option value="InActive">InActive</option>
+                                    </select>
+                                </div>
+                                    <?php }?>
+                                    <?php if (isset($_GET['cid'])){ ?>
+                                        <div class="mb-2">
                                     <button type="submit" name="add" class="btn btn-dark">Add Course</button>
                                 </div>
+                                <?php }else{?>
+                                    <div class="mb-2">
+                                    <button type="submit" name="add" class="btn btn-dark">Add Course</button>
+                                </div>
+                                    <?php }?>
+                                
+                                
+                               
+                                
+                               
+                                
+                                
                             </form>
                         </div>
                     </div>
