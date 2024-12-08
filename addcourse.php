@@ -123,13 +123,13 @@
 
                     //echo "<script>window.location.href='addcourse.php'</script>";
                     $_SESSION['message']="Course added Successfuly!!!";
-                    header("Loction: addcourse.php");
+                    echo "<script>window.location.href='currentstudents.php'</script>";
                     exit(0);
                 }
                 else
                 {
                     $_SESSION['message']="Course added not Successfuly!!!";
-                    header("Loction: addcourse.php");
+                    echo "<script>window.location.href='currentstudents.php'</script>";
                     exit(0);
                 }
             }

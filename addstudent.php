@@ -75,11 +75,11 @@
                         <?php }?>
                         </div>
                         <div class="card-body">
-                            <form method="post">
+                            <form method="post" onsubmit="validateForm(event)">
                             <?php if (isset($_GET['sid'])){ ?>
                                 <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Student Name:</label>
-                                    <input type="text" name="studentname" value="<?php echo $studentdata['studentname']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name">
+                                    <input type="text" name="studentname" value="<?php echo $studentdata['studentname']; ?>" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Student name" required>
                                 </div>
                                 <?php }else{?>
                                 <div class="mb-2">
@@ -250,7 +250,85 @@
                                 <input type="text" name="advance" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Advance Amount">
                             </div>
                             <?php }?>
-                            <script></script>
+                            <script>
+                                function validateForm(event) {
+    // Prevent form submission
+    event.preventDefault();
+
+    // Get form fields
+    const studentName = document.getElementById("exampleFormControlInput1").value.trim();
+    const studentCourse = document.getElementById("studentcourse").value;
+    const studentCollege = document.getElementById("status").value;
+    const studentDegree = document.getElementById("degree").value;
+    const department = document.getElementById("department").value;
+    const joinDate = document.getElementsByName("joindate")[0].value;
+    const phone = document.getElementsByName("studentphone")[0].value.trim();
+    const email = document.getElementsByName("studentemail")[0].value.trim();
+    const address = document.getElementsByName("studentaddress")[0].value.trim();
+    const fees = document.getElementById("fees").value.trim();
+    const advance = document.getElementsByName("advance")[0].value.trim();
+
+    // Validation checks
+    if (!studentName) {
+        alert("Please enter the Student Name.");
+        return false;
+    }
+
+    if (!studentCourse) {
+        alert("Please select a Student Course.");
+        return false;
+    }
+
+    if (!studentCollege) {
+        alert("Please select a Student College.");
+        return false;
+    }
+
+    if (!studentDegree) {
+        alert("Please select a Degree.");
+        return false;
+    }
+
+    if (!department) {
+        alert("Please select a Department.");
+        return false;
+    }
+
+    if (!joinDate) {
+        alert("Please select a Join Date.");
+        return false;
+    }
+
+    if (!phone || !/^\d{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit phone number.");
+        return false;
+    }
+
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        alert("Please enter a valid Email.");
+        return false;
+    }
+
+    if (!address) {
+        alert("Please enter the Address.");
+        return false;
+    }
+
+    if (!fees || isNaN(fees) || fees <= 0) {
+        alert("Please enter a valid Fees amount.");
+        return false;
+    }
+
+    if (!advance || isNaN(advance) || advance < 0) {
+        alert("Please enter a valid Advance amount.");
+        return false;
+    }
+
+    // If all validations pass, submit the form
+    document.querySelector("form").submit();
+}
+
+                            </script>
     
                                 <div class="mb-2">
                                 <?php if(isset($_GET['sid'])){?>                                    

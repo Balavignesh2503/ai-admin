@@ -48,7 +48,7 @@
                 <!-- End of Topbar -->
                  <?php 
                  include('./db.php');
-                 $query = "SELECT * FROM addstudent";
+                 $query = "SELECT * FROM addstudent WHERE joindate > DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
                  $exe = mysqli_query($db,$query);              
                 ?>
 
@@ -107,6 +107,7 @@
                                             <td><?php echo $row['joindate'] ?></td>
                                             <td><?php echo $row['studentphone'] ?></td>
                                             <td><?php echo $row['studentemail'] ?></td>
+                                            <td><?php echo $row['studentaddress'] ?></td>
                                             <td><?php echo $row['fees'] ?></td>
                                             <td><?php echo $row['advance'] ?></td>
                                             <td><?php echo $row['remaining'] ?></td>
