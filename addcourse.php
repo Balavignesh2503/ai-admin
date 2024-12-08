@@ -107,7 +107,7 @@
                                     <?php if (isset($_GET['cid'])){ ?>
                                         <div class="mb-2">
                                     <label for="exampleFormControlInput1" class="form-label">Course Duration:</label>
-                                    <input type="text" class="form-control" name="courseduration" id="exampleFormControlInput1">
+                                    <input type="text" value="<?php echo $coursedata['course_duration']?>" class="form-control" name="courseduration" id="exampleFormControlInput1">
                                 </div>
                                 <?php }else{?>
                                     <div class="mb-2">
@@ -118,7 +118,7 @@
                                     <?php if (isset($_GET['cid'])){ ?>
                                         <div class="mb-2">
                                     <label for="exampleFormControlTextarea1" class="form-label">Course Syllabus:</label>
-                                    <textarea class="form-control" name="coursesyllabus" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <textarea class="form-control" name="coursesyllabus" id="exampleFormControlTextarea1" rows="3"><?php echo $coursedata['course_syllabus']?></textarea>
                                 </div>
                                 <?php }else{?>
                                     <div class="mb-2">
@@ -130,7 +130,7 @@
                                         <div class="mb-2">
                                     <label for="exampleFormControlTextarea1" class="form-label">Category:</label>
                                     <select class="form-select" aria-label="Default select example" name="category">
-                                        <option selected>select category</option>
+                                        <option selected><?php echo $coursedata['category']?></option>
                                         <option value="Internship">Internship</option>
                                         <option value="Certificate Course">certificate course</option>
                                         <option value="Project">project</option>
@@ -149,7 +149,7 @@
                                     <?php }?>
                                     <?php if (isset($_GET['cid'])){ ?>
                                         <div class="mb-2">
-                                    <label for="exampleFormControlInput1" class="form-label">Course status:</label>
+                                    <label for="exampleFormControlInput1" class="form-label">value="<?php echo $coursedata['status']?>"</label>
                                     <select class="form-select" aria-label="Default select example" name="status">
                                         <option selected>select Status</option>
                                         <option value="Active">Active</option>
@@ -168,7 +168,58 @@
                                     <?php }?>
                                     <?php if (isset($_GET['cid'])){ ?>
                                         <div class="mb-2">
-                                    <button type="submit" name="add" class="btn btn-dark">Add Course</button>
+                                        <button type="submit" name="edit" class="btn btn-dark">Update Course</button>
+                                    <?php
+                                            include('./db.php');
+                                            // session_start();
+                                            if (isset($_POST['edit'])) {
+                                                if (isset($_GET['cid'])) {
+                                                    $course_id = mysqli_real_escape_string($db, $_GET['cid']);
+                                                    //$course_id = mysqli_real_escape_string($db, $_POST['cid']);
+                                                    $coursename = mysqli_real_escape_string($db, $_POST['coursename']);
+                                                    $coursefees = mysqli_real_escape_string($db, $_POST['coursefees']);
+                                                    $courseduration = mysqli_real_escape_string($db, $_POST['courseduration']);
+                                                    $coursesyllabus = mysqli_real_escape_string($db, $_POST['coursesyllabus']);
+                                                    $category = mysqli_real_escape_string($db, $_POST['category']);
+                                                    $status = mysqli_real_escape_string($db, $_POST['status']);
+
+                                                    $query = "update addcourse set course_name='$coursename',course_fees='$coursefees',course_duration='$courseduration',course_syllabus='$coursesyllabus',category='$category',status='$status' where cid='$course_id' ";
+                                                    $ex = mysqli_query($db, $query);
+                                                    if ($ex) {
+                                                        // echo "Updated Successfully!!!";
+                                                        $_SESSION['message'] = "Course Updated Successfuly!!!";
+                                                        echo "<script>window.location.href='Listcourse.php'</script>";
+                                                        exit(0);
+                                                    } else {
+                                                        // echo "Not Updated!!! ";
+                                                        $_SESSION['message'] = "Course not Updated!!!";
+                                                        // header("Loction:editcourse.php");
+                                                        exit(0);
+                                                    }
+                                                }
+                                            } else {
+                                                // echo "cid is not set in POST data.";
+                                            }
+                                    ?>
+                                    <button type="submit" name="delete" class="btn btn-dark">Delete Course</button>
+                                    <?php
+                                            include('./db.php');
+                                            if (isset($_POST['delete'])) {
+                                                $course_id = mysqli_real_escape_string($db, $_GET['cid']);
+                                                $query = "DELETE from addcourse WHERE cid='$course_id'";
+                                                $ex = mysqli_query($db, $query);
+                                                if ($ex) {
+                                                    $_SESSION['message'] = "Course Deleted Successfuly!!!";
+                                                    echo "<script>window.location.href='Listcourse.php'</script>";
+                                                    exit(0);
+                                                } else {
+                                                    $_SESSION['message'] = "Course not Updated!!!";
+                                                    exit(0);
+                                                }
+                                            } else {
+                                                // echo "cid is not set in POST data.";
+                                            }
+                                    ?>
                                 </div>
                                 <?php }else{?>
                                     <div class="mb-2">
